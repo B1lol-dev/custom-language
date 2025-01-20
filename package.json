@@ -3,7 +3,7 @@
   "version": "0.1",
   "description": "A simple scripting language inspired by JavaScript",
   "scripts": {
-    "dev": "deno run -A ./main.ts"
+    "lang": "deno run -A ./main.ts"
   },
   "dependencies": {
     "typescript": "^5.7.2"

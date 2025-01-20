@@ -14,7 +14,7 @@ npm install deno -g
 3. run the script
 
 ```bash
-npm run dev
+npm run lang
 ```
 
-its still in development so i don't make any other scripts
+is will run language in terminal
