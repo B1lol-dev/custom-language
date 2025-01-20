@@ -21,6 +21,7 @@ function repl() {
   env.declareVar("null", MAKE_NULL(), true);
   env.declareVar("undefined", MAKE_UNDEFINED(), true);
 
+  console.log("Custom Language v0.1");
   while (true) {
     const input = prompt("> ");
 

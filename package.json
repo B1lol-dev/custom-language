@@ -1,5 +1,5 @@
 {
-  "name": "GadoyScript",
+  "name": "Custom Language",
   "version": "0.1",
   "description": "A simple scripting language inspired by JavaScript",
   "scripts": {
