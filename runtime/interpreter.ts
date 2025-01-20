@@ -6,6 +6,7 @@ import {
   MAKE_NUM,
 } from "./values.ts";
 import {
+  AssignmentExpr,
   BinaryExpr,
   Identifier,
   NumericListeral,
@@ -14,7 +15,11 @@ import {
   VarDeclaration,
 } from "../frontend/ast.ts";
 import Enviroment from "./environment.ts";
-import { eval_binary_expr, eval_identifier } from "./eval/expressions.ts";
+import {
+  eval_assignment,
+  eval_binary_expr,
+  eval_identifier,
+} from "./eval/expressions.ts";
 import { eval_program, eval_var_decloration } from "./eval/statements.ts";
 
 /*
@@ -37,6 +42,8 @@ export function evaluate(astNode: Stmt, env: Enviroment): RuntimeVal {
     case "Identifier":
       return eval_identifier(astNode as Identifier, env);
 
+    case "AssignmentExpr":
+      return eval_assignment(astNode as AssignmentExpr, env);
     case "BinaryExpr":
       return eval_binary_expr(astNode as BinaryExpr, env);
 
@@ -45,6 +52,7 @@ export function evaluate(astNode: Stmt, env: Enviroment): RuntimeVal {
 
     case "VarDeclaration":
       return eval_var_decloration(astNode as VarDeclaration, env);
+    // handle unimplemented ast types as error
     default:
       console.error(
         "This AST Node has not yet been setup for interpretation.",
