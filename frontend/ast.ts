@@ -4,10 +4,14 @@ export type NodeType =
   | "VarDeclaration"
 
   // EXPRESSIONS
+  | "AssignmentExpr"
+
+  // Literals
+  | "Property"
+  | "ObjectLiteral"
   | "NumericListeral"
   | "Identifier"
-  | "BinaryExpr"
-  | "AssignmentExpr";
+  | "BinaryExpr";
 //   | "CallExpr"
 //   | "UnaryExpr"
 //   | "FunctionDeclaration";
@@ -51,4 +55,15 @@ export interface Identifier extends Expr {
 export interface NumericListeral extends Expr {
   kind: "NumericListeral";
   value: number;
+}
+
+export interface Property extends Expr {
+  kind: "Property";
+  key: string;
+  value?: Expr;
+}
+
+export interface ObjectLiteral extends Expr {
+  kind: "ObjectLiteral";
+  properties: Property[];
 }

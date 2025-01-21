@@ -1,0 +1,10 @@
+const foo = 42;
+
+const object = {
+    a: 100,
+    b: 32,
+    foo,
+    inner: {
+        bar: true,
+    },
+};

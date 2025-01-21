@@ -1,35 +1,35 @@
 import Parser from "./frontend/parser.ts";
-import Enviroment from "./runtime/environment.ts";
+import { createGlobalEnv } from "./runtime/environment.ts";
 import { evaluate } from "./runtime/interpreter.ts";
-import {
-  MAKE_BOOL,
-  MAKE_NULL,
-  MAKE_NUM,
-  MAKE_UNDEFINED,
-  NumberVal,
-} from "./runtime/values.ts";
-import { Matem } from "./runtime/math.ts";
-repl();
+
+run("./test.txt");
+
+async function run(filename: string) {
+  const parser = new Parser();
+  const env = createGlobalEnv();
+
+  const input = await Deno.readTextFile(filename);
+  const program = parser.produceAST(input);
+
+  const result = evaluate(program, env);
+  console.log(result);
+}
 
 function repl() {
   const parser = new Parser();
-  const env = new Enviroment();
+  const env = createGlobalEnv();
+  // INITIALIZE Language
+  console.log("\nCustom Language v0.1");
 
-  // creating dafailt global envoirement
-  env.declareVar("false", MAKE_BOOL(false), true);
-  env.declareVar("true", MAKE_BOOL(true), true);
-  env.declareVar("null", MAKE_NULL(), true);
-  env.declareVar("undefined", MAKE_UNDEFINED(), true);
-
-  console.log("Custom Language v0.1");
+  // Continue Until User Stops Or Types `exit`
   while (true) {
     const input = prompt("> ");
-
-    // checks for no user input or exit keyword
+    // Check for no user input or exit keyword.
     if (!input || input.includes("exit")) {
       Deno.exit(1);
     }
 
+    // Produce AST From sourc-code
     const program = parser.produceAST(input);
 
     const result = evaluate(program, env);

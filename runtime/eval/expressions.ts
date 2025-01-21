@@ -1,7 +1,12 @@
-import { AssignmentExpr, BinaryExpr, Identifier } from "../../frontend/ast.ts";
+import {
+  AssignmentExpr,
+  BinaryExpr,
+  Identifier,
+  ObjectLiteral,
+} from "../../frontend/ast.ts";
 import Enviroment from "../environment.ts";
 import { evaluate } from "../interpreter.ts";
-import { RuntimeVal, MAKE_NULL, NumberVal } from "../values.ts";
+import { RuntimeVal, MAKE_NULL, NumberVal, ObjectVal } from "../values.ts";
 
 function eval_numeric_binary_expr(
   lhs: NumberVal,
@@ -65,4 +70,18 @@ export function eval_assignment(
 
   const varname = (node.assigne as Identifier).symbol;
   return env.assignVar(varname, evaluate(node.value, env));
+}
+
+export function eval_object_expr(
+  obj: ObjectLiteral,
+  env: Enviroment
+): RuntimeVal {
+  const object = { type: "object", properties: new Map() } as ObjectVal;
+  for (const { key, value } of obj.properties) {
+    const runtimeVal =
+      value == undefined ? env.lookupVar(key) : evaluate(value, env);
+
+    object.properties.set(key, runtimeVal);
+  }
+  return object;
 }

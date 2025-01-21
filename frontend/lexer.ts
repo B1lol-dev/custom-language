@@ -12,6 +12,10 @@ export enum TokenType {
   OpenParen,
   CloseParen,
   BinaryOperator,
+  Comma,
+  Colon,
+  OpenBrace, // {
+  CloseBrace, // }
   EOF, // signified the end of file
 
   // keywords
@@ -44,7 +48,7 @@ function isInt(str: string): boolean {
 }
 
 function isSkippable(str: string): boolean {
-  return str == " " || str == "\n" || str == "\t";
+  return str == " " || str == "\n" || str == "\t" || str == "\r";
 }
 
 export function tokenize(sourceCode: string): Token[] {
@@ -57,6 +61,10 @@ export function tokenize(sourceCode: string): Token[] {
       tokens.push(token(src.shift(), TokenType.OpenParen));
     } else if (src[0] == ")") {
       tokens.push(token(src.shift(), TokenType.CloseParen));
+    } else if (src[0] == "{") {
+      tokens.push(token(src.shift(), TokenType.OpenBrace));
+    } else if (src[0] == "}") {
+      tokens.push(token(src.shift(), TokenType.CloseBrace));
     } else if (
       src[0] == "+" ||
       src[0] == "-" ||
@@ -69,6 +77,10 @@ export function tokenize(sourceCode: string): Token[] {
       tokens.push(token(src.shift(), TokenType.Equals));
     } else if (src[0] == ";") {
       tokens.push(token(src.shift(), TokenType.Semicolon));
+    } else if (src[0] == ":") {
+      tokens.push(token(src.shift(), TokenType.Colon));
+    } else if (src[0] == ",") {
+      tokens.push(token(src.shift(), TokenType.Comma));
     } else {
       // handle multi=character tokens
 
