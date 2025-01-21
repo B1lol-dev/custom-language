@@ -9,7 +9,6 @@
     "noEmit": true
   },
   "include": [
-    "gds.ts",
     "frontend/parser.ts",
     "runtime/interpreter.ts",
     "runtime/environment.ts"
